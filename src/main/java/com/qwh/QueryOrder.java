@@ -1,5 +1,6 @@
 package com.qwh;
 
+import com.qwh.bean.Order;
 import com.qwh.utils.JDBCUtil;
 import org.junit.Test;
 

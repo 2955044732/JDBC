@@ -1,7 +1,6 @@
 package com.qwh;
 
-import org.junit.Test;
-import org.omg.CORBA.PUBLIC_MEMBER;
+import com.qwh.bean.User;
 
 import java.io.InputStream;
 import java.lang.reflect.Field;

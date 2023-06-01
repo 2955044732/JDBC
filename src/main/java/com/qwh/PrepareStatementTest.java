@@ -1,6 +1,7 @@
 package com.qwh;
 
 
+import com.qwh.bean.User;
 import com.qwh.utils.JDBCUtil;
 
 import java.lang.reflect.Field;
