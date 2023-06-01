@@ -1,4 +1,4 @@
-package com.qwh;
+package com.qwh.bean;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
