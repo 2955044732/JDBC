@@ -2,6 +2,7 @@ package com.qwh.utils;
 
 
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.sql.*;
 import java.util.Properties;
 
@@ -58,7 +59,40 @@ public class JDBCUtil {
         }
 
     }
-    
+
+    public static <T> T query(Class<T> clazz,String sql,Object ...args){
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = getConnect();
+            ps = conn.prepareStatement(sql);
+            for (int i = 0; i < args.length; i++) {
+                ps.setObject(i+1,args[i]);
+            }
+            rs = ps.executeQuery();
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int columnCount = rsmd.getColumnCount();
+            if (rs.next()){
+                T t = clazz.newInstance();
+                for (int i = 0; i < columnCount; i++) {
+                    Object columnValue = rs.getObject(i + 1);
+                    String columnLabel = rsmd.getColumnLabel(i + 1);
+
+                    Field field = t.getClass().getDeclaredField(columnLabel);
+                    field.setAccessible(true);
+                    field.set(t,columnValue);
+                }
+                return t;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }  finally {
+            JDBCUtil.closeSource(conn,ps,rs);
+        }
+        return null;
+    }
+
 
     /**
      * 关闭资源
