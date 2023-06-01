@@ -58,6 +58,23 @@ public class JDBCUtil {
         }
 
     }
+    public static void update(String sql,Object ...args){
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = getConnect();
+            ps = conn.prepareStatement(sql);
+            for (int i = 0; i < args.length; i++) {
+                ps.setObject(i+1,args[i]);
+            }
+            ps.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            closeSource(conn,ps);
+        }
+
+    }
     public static void closeSource(Connection conn, Statement ps,ResultSet rs){
 
         try {
