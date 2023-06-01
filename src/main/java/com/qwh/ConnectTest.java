@@ -16,11 +16,11 @@ import java.util.Properties;
  * @create 2023-06-2023/6/1 10:11
  */
 
-public class jdbc {
+public class ConnectTest {
     @Test
     public void getConnect1() throws Exception {
         Driver driver = new Driver();
-        String url = "jdbc:mysql://localhost:3306/test";
+        String url = "ConnectTest:mysql://localhost:3306/test";
         Properties info = new Properties();
         info.setProperty("user","root");
         info.setProperty("password","123123");
@@ -33,7 +33,7 @@ public class jdbc {
         Class clazz = Class.forName("com.mysql.cj.jdbc.Driver");
         //反射创建驱动
         Driver driver = (Driver) clazz.newInstance();
-        String url = "jdbc:mysql://localhost:3306/test";
+        String url = "ConnectTest:mysql://localhost:3306/test";
         Properties info = new Properties();
         info.setProperty("user","root");
         info.setProperty("password","123123");
@@ -45,7 +45,7 @@ public class jdbc {
     public void getConnect3() throws Exception {
         Class clazz = Class.forName("com.mysql.cj.jdbc.Driver");
         Driver driver = (Driver) clazz.newInstance();
-        String url = "jdbc:mysql://localhost:3306/test";
+        String url = "ConnectTest:mysql://localhost:3306/test";
         String user = "root";
         String password = "123123";
 
