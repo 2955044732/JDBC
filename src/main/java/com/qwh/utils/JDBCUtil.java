@@ -10,6 +10,10 @@ import java.util.Properties;
  * @create 2023-06-2023/6/1 12:24
  */
 public class JDBCUtil {
+    /**
+     * 获取链接
+     * @return
+     */
     public static Connection getConnect(){
         Connection connection = null;
         try {
@@ -31,6 +35,28 @@ public class JDBCUtil {
             throw new RuntimeException(e);
         }
         return connection;
+    }
+    /**
+     * 增删改
+     * @param sql
+     * @param args
+     */
+    public static void update(String sql,Object ...args){
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = getConnect();
+            ps = conn.prepareStatement(sql);
+            for (int i = 0; i < args.length; i++) {
+                ps.setObject(i+1,args[i]);
+            }
+            ps.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            closeSource(conn,ps);
+        }
+
     }
 
     /**
@@ -58,23 +84,15 @@ public class JDBCUtil {
         }
 
     }
-    public static void update(String sql,Object ...args){
-        Connection conn = null;
-        PreparedStatement ps = null;
-        try {
-            conn = getConnect();
-            ps = conn.prepareStatement(sql);
-            for (int i = 0; i < args.length; i++) {
-                ps.setObject(i+1,args[i]);
-            }
-            ps.execute();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            closeSource(conn,ps);
-        }
 
-    }
+
+
+    /**
+     * 关闭资源
+     * @param conn
+     * @param ps
+     * @param rs
+     */
     public static void closeSource(Connection conn, Statement ps,ResultSet rs){
 
         try {
