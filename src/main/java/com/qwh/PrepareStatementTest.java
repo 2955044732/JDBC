@@ -1,5 +1,8 @@
 package com.qwh;
 
+
+import com.qwh.utils.JDBCUtil;
+
 import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -45,7 +48,7 @@ public class PrepareStatementTest {
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
-            conn = JDBCUtils.getConnection();
+            conn = JDBCUtil.getConnect();
 
             ps = conn.prepareStatement(sql);
             for (int i = 0; i < args.length; i++) {
@@ -79,8 +82,7 @@ public class PrepareStatementTest {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            JDBCUtils.closeResource(conn, ps, rs);
-
+            JDBCUtil.closeSource(conn, ps, rs);
         }
 
         return null;
